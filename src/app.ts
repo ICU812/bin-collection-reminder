@@ -1,7 +1,8 @@
 import "dotenv/config";
+import { isTodayOrTomorrow } from "./dateUtils.ts";
 import { fetchBinCollections } from "./fetch.ts";
-import { getNextCollections, formatCollectionMessage } from "./logic.ts";
-import { sendTelegramMessage } from "./notify.ts";
+import { formatCollectionMessage, getNextCollections } from "./logic.ts";
+import { sendTelegramMessage } from "./sendNotification/notify.ts";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
@@ -20,8 +21,10 @@ if (!UPRN) {
 async function main() {
     const collections = await fetchBinCollections(UPRN);
     const { date, items } = getNextCollections(collections);
-    const message = formatCollectionMessage(date, items);
-    await sendTelegramMessage(BOT_TOKEN, CHAT_ID, message);
+    if (isTodayOrTomorrow(date)) {
+        const message = formatCollectionMessage(date, items);
+        await sendTelegramMessage(BOT_TOKEN, CHAT_ID, message);
+    }
 }
 
 main().catch(err => {
