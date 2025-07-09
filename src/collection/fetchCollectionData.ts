@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 import { ReadingBinCollectionResponseSchema } from "./schema.ts";
-import { BinCollection } from "./types.ts";
+import { BinCollection } from "../types/binTypes.ts";
 
 export async function fetchBinCollections(uprn: string): Promise<BinCollection[]> {
   const res = await fetch(`https://api.reading.gov.uk/api/collections/${uprn}`);

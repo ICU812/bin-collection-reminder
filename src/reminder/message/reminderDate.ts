@@ -1,11 +1,7 @@
-export enum ReminderDay {
+enum ReminderDay {
     Today = "today",
     Tomorrow = "tomorrow",
-    None = "none"
-}
-
-export function isTodayOrTomorrow(date: Date): boolean {
-    return getReminderDayLabel(date) === "today" || getReminderDayLabel(date) === "tomorrow";
+    None = ""
 }
 
 export function getReminderDayLabel(date: Date): ReminderDay {
@@ -22,4 +18,3 @@ export function getReminderDayLabel(date: Date): ReminderDay {
 
     return ReminderDay.None;
 }
-

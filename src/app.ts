@@ -1,8 +1,10 @@
+// Entry point: orchestrates fetching bin collection data and sending a reminder
+
 import "dotenv/config";
-import { isTodayOrTomorrow } from "./dateUtils.ts";
-import { fetchBinCollections } from "./fetch.ts";
-import { formatCollectionMessage, getNextCollections } from "./logic.ts";
-import { sendTelegramMessage } from "./sendNotification/notify.ts";
+import { fetchBinCollections } from "./collection/fetchCollectionData.ts";
+import { getNextCollections } from "./collection/getNextCollections.ts";
+import { generateReminderMessage } from "./reminder/message/generateMessage.ts";
+import { sendTelegramMessage as sendReminderMessage } from "./reminder/sendTelegram.ts";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
@@ -19,12 +21,13 @@ if (!UPRN) {
 }
 
 async function main() {
-    const collections = await fetchBinCollections(UPRN);
-    const { date, items } = getNextCollections(collections);
-    if (isTodayOrTomorrow(date)) {
-        const message = formatCollectionMessage(date, items);
-        await sendTelegramMessage(BOT_TOKEN, CHAT_ID, message);
-    }
+    const upcomingBinCollections = await fetchBinCollections(UPRN);
+    const { nextCollectionDate, nextCollections } = getNextCollections(upcomingBinCollections);
+
+    // if (isNextCollectionTodayOrTomorrow(nextCollectionDate)) {
+    const message = generateReminderMessage(nextCollectionDate, nextCollections);
+    await sendReminderMessage(BOT_TOKEN, CHAT_ID, message);
+    // }
 }
 
 main().catch(err => {
