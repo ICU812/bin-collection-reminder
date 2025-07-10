@@ -5,7 +5,6 @@ import { fetchBinCollections } from "./collection/fetchCollectionData.ts";
 import { getNextCollections } from "./collection/getNextCollections.ts";
 import { generateReminderMessage } from "./reminder/message/generateMessage.ts";
 import { sendTelegramMessage as sendReminderMessage } from "./reminder/sendTelegram.ts";
-import { isTodayOrTomorrow as isNextCollectionTodayOrTomorrow } from "./utils.ts/date.ts";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID!;
@@ -25,10 +24,8 @@ async function main() {
     const upcomingBinCollections = await fetchBinCollections(UPRN);
     const { nextCollectionDate, nextCollections } = getNextCollections(upcomingBinCollections);
 
-    if (isNextCollectionTodayOrTomorrow(nextCollectionDate)) {
-        const message = generateReminderMessage(nextCollectionDate, nextCollections);
-        await sendReminderMessage(BOT_TOKEN, CHAT_ID, message);
-    }
+    const message = generateReminderMessage(nextCollectionDate, nextCollections);
+    await sendReminderMessage(BOT_TOKEN, CHAT_ID, message);
 }
 
 main().catch(err => {
