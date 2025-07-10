@@ -1,5 +1,5 @@
 import { BinCollection } from "../../types/binTypes.ts";
-import { formatBinService } from "./binIcons.ts";
+import { formatCollectionLabel } from "./formatCollectionLabel.ts";
 import { getReminderDayLabel } from "./reminderDate.ts";
 
 export function generateReminderMessage(date: Date, items: BinCollection[]): string {
@@ -12,7 +12,7 @@ export function generateReminderMessage(date: Date, items: BinCollection[]): str
         month: "long"
     });
 
-    const services = items.map(formatBinService).join("\n\n");
+    const services = items.map(formatCollectionLabel).join("\n\n");
 
     return `${services}
 
