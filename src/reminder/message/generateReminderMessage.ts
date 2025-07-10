@@ -1,6 +1,6 @@
 import { BinCollection } from "../../types/binTypes.ts";
 import { formatCollectionLabel } from "./formatCollectionLabel.ts";
-import { getReminderDayLabel } from "./reminderDate.ts";
+import { getReminderDayLabel } from "./getReminderDayLabel.ts";
 
 export function generateReminderMessage(date: Date, items: BinCollection[]): string {
     const label = getReminderDayLabel(date);
@@ -18,6 +18,3 @@ export function generateReminderMessage(date: Date, items: BinCollection[]): str
 
 *Date:* ${labelStr} ${dateStr}`
 }
-
-
-

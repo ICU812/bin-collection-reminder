@@ -3,7 +3,7 @@
 import "dotenv/config";
 import { fetchBinCollections } from "./collection/fetchCollectionData.ts";
 import { getNextCollections } from "./collection/getNextCollections.ts";
-import { generateReminderMessage } from "./reminder/message/generateMessage.ts";
+import { generateReminderMessage } from "./reminder/message/generateReminderMessage.ts";
 import { sendTelegramMessage as sendReminderMessage } from "./reminder/sendTelegram.ts";
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN!;
