@@ -20,4 +20,3 @@ export function getNextCollections(collections: BinCollection[]): BinReminderDat
 
     return { nextCollectionDate, nextCollections };
 }
-
