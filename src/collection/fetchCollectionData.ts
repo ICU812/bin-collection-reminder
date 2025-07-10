@@ -1,4 +1,3 @@
-import fetch from "node-fetch";
 import { BinCollection } from "../types/binTypes.ts";
 import { parseDate } from "./date.ts";
 import { ReadingBinCollectionResponseSchema } from "./schema.ts";
@@ -8,7 +7,6 @@ export async function fetchBinCollections(uprn: string): Promise<BinCollection[]
   if (!res.ok) throw new Error(`Reading API error: ${res.status} ${res.statusText}`);
 
   const raw = await res.json();
-  console.log({ raw });
   const parsed = ReadingBinCollectionResponseSchema.safeParse(raw);
 
   if (!parsed.success) {
