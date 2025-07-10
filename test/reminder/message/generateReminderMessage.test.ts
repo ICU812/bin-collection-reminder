@@ -1,5 +1,5 @@
 import { generateReminderMessage } from '../../../src/reminder/message/generateReminderMessage.ts';
-import { BinCollection } from "../../../src/types/binTypes";
+import { BinCollection } from "../../../src/types/binTypes.ts";
 
 it("formats a single bin collection message correctly", () => {
     const date = new Date("2025-07-14T00:00:00Z");
