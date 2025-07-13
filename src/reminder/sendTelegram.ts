@@ -1,5 +1,3 @@
-import fetch from "node-fetch";
-
 export async function sendTelegramMessage(token: string, chatId: string, message: string): Promise<void> {
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
     method: "POST",
