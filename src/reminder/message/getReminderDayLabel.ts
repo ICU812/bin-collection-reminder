@@ -1,6 +1,6 @@
-enum ReminderDay {
-  Today = "today",
-  Tomorrow = "tomorrow",
+export enum ReminderDay {
+  Today = "Today",
+  Tomorrow = "Tomorrow",
   None = "",
 }
 

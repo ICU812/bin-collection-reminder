@@ -1,12 +1,20 @@
+import { vi, describe, beforeEach, it, expect } from "vitest";
+
+// ⛔ Must come before imports
+vi.mock("../../../src/reminder/message/getReminderDayLabel.ts", async () => {
+  const actual = await vi.importActual<typeof import("../../../src/reminder/message/getReminderDayLabel.ts")>(
+    "../../../src/reminder/message/getReminderDayLabel.ts"
+  );
+
+  return {
+    ...actual,
+    getReminderDayLabel: vi.fn(), // Only override this
+  };
+});
+
+import { getReminderDayLabel, ReminderDay } from "../../../src/reminder/message/getReminderDayLabel.ts";
 import { generateReminderMessage } from "../../../src/reminder/message/generateReminderMessage.ts";
-import { BinCollection } from "../../../src/types/binTypes.ts";
-
-// Mock getReminderDayLabel to control the label output
-jest.mock("../../../src/reminder/message/getReminderDayLabel.ts", () => ({
-  getReminderDayLabel: jest.fn(),
-}));
-
-import { getReminderDayLabel } from "../../../src/reminder/message/getReminderDayLabel.ts";
+import type { BinCollection } from "../../../src/types/binTypes.ts";
 
 describe("generateReminderMessage", () => {
   const date = new Date("2025-07-14T00:00:00Z");
@@ -42,22 +50,21 @@ describe("generateReminderMessage", () => {
   ];
 
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it("formats a single bin collection message correctly", () => {
-    (getReminderDayLabel as jest.Mock).mockReturnValue(""); // falsy label
+    (getReminderDayLabel as ReturnType<typeof vi.fn>).mockReturnValue(ReminderDay.None);
 
     const message = generateReminderMessage(date, [baseCollections[0]]);
     expect(message).toContain("🥕 🍌 Food Waste Collection Service");
     expect(message).toMatch(/\*Date:\*.*Monday 14 July/);
   });
 
-  it("formats a multiple bin collections message correctly", () => {
-    (getReminderDayLabel as jest.Mock).mockReturnValue(""); // falsy label
+  it("formats multiple bin collections correctly", () => {
+    (getReminderDayLabel as ReturnType<typeof vi.fn>).mockReturnValue(ReminderDay.None);
 
     const message = generateReminderMessage(date, baseCollections);
-
     expect(message).toContain("🥕 🍌 Food Waste Collection Service");
     expect(message).toContain("🟥 ♻️ Recycling Collection Service");
     expect(message).toContain("🗑️ ⬛ Domestic Waste Collection Service");
@@ -65,10 +72,9 @@ describe("generateReminderMessage", () => {
   });
 
   it("includes label when getReminderDayLabel returns a value", () => {
-    (getReminderDayLabel as jest.Mock).mockReturnValue("Tomorrow");
+    (getReminderDayLabel as ReturnType<typeof vi.fn>).mockReturnValue(ReminderDay.Tomorrow);
 
     const message = generateReminderMessage(date, [baseCollections[0]]);
-
     expect(message).toContain("*Date:* (Tomorrow) Monday 14 July");
   });
 });

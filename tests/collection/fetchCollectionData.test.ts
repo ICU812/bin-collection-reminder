@@ -1,14 +1,15 @@
-import fetchMock from "jest-fetch-mock";
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { fetchBinCollections } from "../../src/collection/fetchCollectionData.ts";
 
+beforeEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("fetchBinCollections - Reading bin collection API integration", () => {
-
-
-  beforeEach(() => fetchMock.resetMocks());
-
   it("parses valid Reading API response correctly", async () => {
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
         uprn: "123456",
         success: true,
         error_code: 0,
@@ -25,21 +26,23 @@ describe("fetchBinCollections - Reading bin collection API integration", () => {
           },
         ],
       }),
-    );
+    }));
 
     const result = await fetchBinCollections("123456");
 
     expect(result).toHaveLength(1);
     expect(result[0].service).toBe("Food Waste Collection Service");
     expect(result[0].jsDate instanceof Date).toBe(true);
-    expect(isNaN(result[0].jsDate!.getTime() ?? NaN)).toBe(false);
-    expect(fetchMock).toHaveBeenCalledWith(
-      "https://api.reading.gov.uk/api/collections/123456",
-    );
+    expect(isNaN(result[0].jsDate!.getTime())).toBe(false);
+    expect(fetch).toHaveBeenCalledWith("https://api.reading.gov.uk/api/collections/123456");
   });
 
   it("throws an error if the API response is not ok", async () => {
-    fetchMock.mockResponseOnce("Server error", { status: 500, statusText: "Internal Server Error" });
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: false,
+      status: 500,
+      statusText: "Internal Server Error",
+    }));
 
     await expect(fetchBinCollections("123456")).rejects.toThrow(
       "Reading API error: 500 Internal Server Error"
@@ -47,7 +50,10 @@ describe("fetchBinCollections - Reading bin collection API integration", () => {
   });
 
   it("throws an error if the API response schema is invalid", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ bad: "data" }));
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({ bad: "data" }),
+    }));
 
     await expect(fetchBinCollections("123456")).rejects.toThrow(
       "Reading API response validation failed."
@@ -55,8 +61,9 @@ describe("fetchBinCollections - Reading bin collection API integration", () => {
   });
 
   it("parses multiple collections with valid dates", async () => {
-    fetchMock.mockResponseOnce(
-      JSON.stringify({
+    vi.stubGlobal("fetch", vi.fn().mockResolvedValue({
+      ok: true,
+      json: async () => ({
         uprn: "123456",
         success: true,
         error_code: 0,
@@ -81,7 +88,7 @@ describe("fetchBinCollections - Reading bin collection API integration", () => {
           },
         ],
       }),
-    );
+    }));
 
     const result = await fetchBinCollections("123456");
 
@@ -89,4 +96,3 @@ describe("fetchBinCollections - Reading bin collection API integration", () => {
     expect(result[1].service).toBe("Recycling Collection");
   });
 });
-

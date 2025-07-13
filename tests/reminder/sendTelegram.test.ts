@@ -1,3 +1,4 @@
+import { describe, it, expect, beforeEach, vi } from "vitest";
 import { sendTelegramMessage } from "../../src/reminder/sendTelegram.ts";
 
 describe("sendTelegramMessage", () => {
@@ -6,15 +7,18 @@ describe("sendTelegramMessage", () => {
   const message = "Hello world!";
 
   beforeEach(() => {
-    fetchMock.resetMocks();
+    globalThis.fetch = vi.fn();
   });
 
   it("sends a Telegram message successfully", async () => {
-    fetchMock.mockResponseOnce(JSON.stringify({ ok: true, text: "OK" }));
+    (fetch as vi.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({ ok: true, text: "OK" }),
+    });
 
     await sendTelegramMessage(token, chatId, message);
 
-    expect(fetchMock).toHaveBeenCalledWith(
+    expect(fetch).toHaveBeenCalledWith(
       `https://api.telegram.org/bot${token}/sendMessage`,
       expect.objectContaining({
         method: "POST",
@@ -29,12 +33,12 @@ describe("sendTelegramMessage", () => {
   });
 
   it("throws an error if the response is not ok", async () => {
-    fetchMock.mockResponseOnce("Bad request", { status: 400 });
+    (fetch as vi.Mock).mockResolvedValue({ ok: false, text: async () => "Bad request" });
 
     await expect(sendTelegramMessage(token, chatId, message)).rejects.toThrow(
       "Failed to send Telegram message.",
     );
 
-    expect(fetchMock).toHaveBeenCalled();
+    expect(fetch).toHaveBeenCalled();
   });
 });

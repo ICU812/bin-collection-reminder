@@ -49,7 +49,7 @@ This project runs weekly via GitHub Actions (configured in .github/workflows). Y
 
 ### 🧪 Testing
 
-Unit tests are written with Jest:
+Unit tests are written with Vitest:
 
 ```bash
 npm test

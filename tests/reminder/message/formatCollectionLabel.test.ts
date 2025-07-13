@@ -1,3 +1,4 @@
+import { describe, expect, it } from "vitest";
 import { formatCollectionLabel } from "../../../src/reminder/message/formatCollectionLabel.ts";
 import type { BinCollection } from "../../../src/types/binTypes.ts";
 
