@@ -1,0 +1,51 @@
+name: Bin Reminder - Validate on push
+
+on:
+  push:
+    paths:
+      - 'bin-collection-reminder/**'
+      - '.github/workflows/bin-collection-reminder-validate.yaml'
+  pull_request:
+    paths:
+      - 'bin-collection-reminder/**'
+      - '.github/workflows/bin-collection-reminder-validate.yaml'
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: bin-collection-reminder
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: bin-collection-reminder/node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('bin-collection-reminder/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Clean install dependencies
+        run: npm ci
+      
+      - name: Lint project
+        run: npm run lint:ci
+
+      - name: Build project
+        run: npm run build
+      
+      - name: Run tests
+        run: npm run test
+      
+      - name: Run tests with coverage
+        run: npm run test:coverage

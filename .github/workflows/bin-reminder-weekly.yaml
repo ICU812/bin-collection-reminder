@@ -1,4 +1,4 @@
-name: Bin Reminder
+name: Bin Reminder - Weekly scheduler
 
 on:
   schedule:
