@@ -4,11 +4,11 @@ on:
   push:
     paths:
       - 'bin-collection-reminder/**'
-      - '.github/workflows/bin-collection-reminder-validate.yaml'
+      - '.github/workflows/bin-reminder-validate.yaml'
   pull_request:
     paths:
       - 'bin-collection-reminder/**'
-      - '.github/workflows/bin-collection-reminder-validate.yaml'
+      - '.github/workflows/bin-reminder-validate.yaml'
 
 jobs:
   build-and-test:
