@@ -14,9 +14,9 @@ describe("ReadingBinCollectionResponseSchema", () => {
         schedule: "Mon",
         day: "Monday",
         date: "14/07/2025 00:00:00",
-        read_date: "Monday 14th of July"
-      }
-    ]
+        read_date: "Monday 14th of July",
+      },
+    ],
   };
 
   it("parses valid data", () => {
@@ -25,7 +25,8 @@ describe("ReadingBinCollectionResponseSchema", () => {
   });
 
   it("fails when a required field is missing", () => {
-    const { uprn, ...partial } = validData;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { uprn: _uprn, ...partial } = validData;
     const result = ReadingBinCollectionResponseSchema.safeParse(partial);
     expect(result.success).toBe(false);
   });
@@ -39,7 +40,7 @@ describe("ReadingBinCollectionResponseSchema", () => {
   it("fails when a nested collection is malformed", () => {
     const broken = {
       ...validData,
-      collections: [{ ...validData.collections[0], date: 123 }]
+      collections: [{ ...validData.collections[0], date: 123 }],
     };
     const result = ReadingBinCollectionResponseSchema.safeParse(broken);
     expect(result.success).toBe(false);

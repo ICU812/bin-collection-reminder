@@ -29,13 +29,15 @@
     "@typescript-eslint/parser": "^8.36.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.31.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.32.0",
     "jest": "^30.0.4",
     "jest-fetch-mock": "^3.0.3",
     "prettier": "^3.5.3",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
   },
   "repository": {
     "type": "git",

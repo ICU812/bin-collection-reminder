@@ -1,18 +1,21 @@
-import type { Config } from 'jest';
+import type { Config } from "jest";
 
 const config: Config = {
-  testEnvironment: 'node',
+  testEnvironment: "node",
   transform: {
-    '^.+\\.ts$': ['ts-jest', {
-      useESM: true,
-      tsconfig: './tsconfig.test.json',
-    }],
+    "^.+\\.ts$": [
+      "ts-jest",
+      {
+        useESM: true,
+        tsconfig: "./tsconfig.test.json",
+      },
+    ],
   },
-  extensionsToTreatAsEsm: ['.ts'],
+  extensionsToTreatAsEsm: [".ts"],
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.ts$': '$1',
+    "^(\\.{1,2}/.*)\\.ts$": "$1",
   },
-  setupFiles: ['./jest.setup.ts'],
+  setupFiles: ["./jest.setup.ts"],
 };
 
 export default config;

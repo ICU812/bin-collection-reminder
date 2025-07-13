@@ -3,13 +3,7 @@
   "compilerOptions": {
     "module": "ESNext",
     "moduleResolution": "Node",
-    "types": [
-      "jest",
-      "node"
-    ]
+    "types": ["jest", "node"]
   },
-  "include": [
-    "tests/**/*.test.ts",
-    "jest.setup.ts"
-  ]
+  "include": ["tests/**/*.test.ts", "jest.setup.ts"]
 }

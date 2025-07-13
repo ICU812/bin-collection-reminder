@@ -6,7 +6,7 @@ export const BinCollectionSchema = z.object({
   schedule: z.string(), // "Mon"
   day: z.string(), // "Monday"
   date: z.string(), //"04/08/2025 00:00:00",
-  read_date: z.string() // "Monday 4th of August"
+  read_date: z.string(), // "Monday 4th of August"
 });
 
 export const ReadingBinCollectionResponseSchema = z.object({
@@ -15,6 +15,5 @@ export const ReadingBinCollectionResponseSchema = z.object({
   error_code: z.number(),
   error_description: z.string(),
   code_description: z.string(),
-  collections: z.array(BinCollectionSchema)
+  collections: z.array(BinCollectionSchema),
 });
-

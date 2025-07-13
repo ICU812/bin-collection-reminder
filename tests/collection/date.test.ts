@@ -8,7 +8,6 @@ describe("parseDate", () => {
     expect(result.getDate()).toBe(14);
     expect(result.getHours()).toBe(0);
     expect(result.getMinutes()).toBe(0);
-
   });
 
   it("returns Invalid Date for incorrect format", () => {
@@ -25,5 +24,4 @@ describe("parseDate", () => {
     const result = parseDate("99/99/9999 99:99:99");
     expect(Number.isNaN(result.getTime())).toBe(true);
   });
-
 });

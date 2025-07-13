@@ -1,5 +1,7 @@
 export function parseDate(dateStr: string): Date {
-  const match = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/.exec(dateStr);
+  const match = /^(\d{2})\/(\d{2})\/(\d{4}) (\d{2}):(\d{2}):(\d{2})$/.exec(
+    dateStr,
+  );
   if (!match) return new Date(NaN);
 
   const [, dd, mm, yyyy, hh, min, ss] = match.map(Number);
