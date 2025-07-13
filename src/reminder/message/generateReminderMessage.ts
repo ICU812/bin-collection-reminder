@@ -19,5 +19,5 @@ export function generateReminderMessage(
 
   return `${services}
 
-*Date:* ${labelStr} ${dateStr}`;
+*Date:*${labelStr} ${dateStr}`;
 }
