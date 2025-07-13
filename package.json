@@ -19,7 +19,6 @@
   },
   "dependencies": {
     "dotenv": "^17.0.1",
-    "jest-fetch-mock": "^3.0.3",
     "nodemon": "^3.1.10",
     "zod": "^3.25.75"
   },
@@ -31,7 +30,8 @@
     "cross-env": "^7.0.3",
     "eslint": "^9.31.0",
     "eslint-plugin-import": "^2.32.0",
-    "jest": "^30.0.4",
+    "jest": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
     "prettier": "^3.5.3",
     "ts-jest": "^29.4.0",
     "ts-node": "^10.9.2",

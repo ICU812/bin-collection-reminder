@@ -1,15 +1,16 @@
-// jest.config.ts
 import type { Config } from 'jest';
 
 const config: Config = {
-  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
-  extensionsToTreatAsEsm: ['.ts'],
   transform: {
-    '^.+\\.ts$': ['ts-jest', { useESM: true }],
+    '^.+\\.ts$': ['ts-jest', {
+      useESM: true,
+      tsconfig: './tsconfig.test.json',
+    }],
   },
+  extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.ts$': '$1', // Allow importing .ts files in ESM
+    '^(\\.{1,2}/.*)\\.ts$': '$1',
   },
   setupFiles: ['./jest.setup.ts'],
 };

@@ -54,7 +54,6 @@ it("formats a multiple bin collections message correctly", () => {
     ];
 
     const message = generateReminderMessage(date, collections);
-    console.log(message)
 
     expect(message).toContain("🥕 🍌 Food Waste Collection Service");
     expect(message).toContain("🟥 ♻️ Recycling Collection Service");
