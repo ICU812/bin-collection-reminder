@@ -6,7 +6,7 @@ A small Node.js script that checks upcoming bin collection dates from Reading Bo
 
 Fetches bin collection dates from Reading Council's API using your UPRN.
 
-Identifies the next collection date (today or tomorrow).
+Identifies the next collection date.
 
 Sends a Telegram message listing upcoming bin collection types.
 
@@ -57,4 +57,4 @@ npm test
 
 ## 🪪 License
 
-MIT (or your preferred license)
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
